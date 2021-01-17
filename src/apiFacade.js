@@ -19,7 +19,7 @@ function getHotel(id) {
 }
 
 function makeBooking(booking) {
-    const options = makeOptions("POST", true, {booking})
+    const options = makeOptions("POST", true, booking)
     return fetch(BASE_URL + "hotel/book", options)
     .then(handleHttpErrors)
 }

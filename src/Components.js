@@ -62,6 +62,7 @@ export function Hotels({isLoggedIn}) {
         <li key={hotel.id}>
             <h5>{hotel.name}</h5>
             <p>{hotel.content}</p>
+            <p>{hotel.address}</p>
             <NavLink onClick={() => setHotel(hotel)} to={`${url}/${hotel.id}`}>View Details</NavLink>
             <hr/>
         </li>  
@@ -96,6 +97,7 @@ function Hotel({hotel, isLoggedIn}) {
                 <li>Phone: {hotel.phone}</li>
                 <li>Price: {hotel.price}</li>
                 <li>Website: {hotel.url}</li>
+                <li>Address: {hotel.address}</li>
             </ul>
             <p>Directions to hotel: {hotel.directions}</p>
 
@@ -113,9 +115,10 @@ function Reservation({ hotel }) {
     const [value, onChange] = useState(new Date());
     const [reservation, setReservation] = useState({
         address: hotel.address,
-        hotelName: hotel.name,
-        hotelPhone: hotel.phone,
-        hotelId: hotel.id,
+        name: hotel.name,
+        phone: hotel.phone,
+        pricePrNight: hotel.price,
+        id: hotel.id,
         startDate: value
     });
 
@@ -128,7 +131,7 @@ function Reservation({ hotel }) {
 
     function makeReservation(event) {
         event.preventDefault();
-        console.log(reservation);
+        console.log("Before facade: ", reservation);
         apiFacade.makeBooking(reservation);
     }
 
@@ -151,20 +154,19 @@ function Reservation({ hotel }) {
                     <input id="username" type="text" placeholder="Username" />
                     <input id="password" type="password" placeholder="Password" />
                     <p>Cardholder name:</p>
-                    <input id="Cardholder" type="text" placeholder="Cardholder name" />
+                    <input id="cardholder" type="text" placeholder="Cardholder name" />
                     <p>Phone number:</p>
                     <input id="phoneNumber" type="text" placeholder="Phone number" />
                     <p>Cardnumber:</p>
-                    <input id="Cardnumber" type="number" placeholder="Cardnumber" />
+                    <input id="cardnumber" type="number" placeholder="Cardnumber" />
                     <p>Type of card:</p>
-                    <input id="Cardtype" type="radio" value="visa" /> Visa <br/>
-                    <input id="Cardtype" type="radio" value="mastercard" /> Mastercard <br/>
-                    <input id="Cardtype" type="radio" value="debit" /> Debit
+                    <input id="type" type="radio" value="visa" /> Visa <br/>
+                    <input id="type" type="radio" value="mastercard" /> Mastercard <br/>
+                    <input id="type" type="radio" value="debit" /> Debit
                     <p>Month of Expiration:</p>
-                    <input id="MonthOfExpiration" type="number" min="1" max="12" />
+                    <input id="expirationMonth" type="number" min="1" max="12" />
                     <p>Year of Expiration:</p>
-                    <input id="YearOfExpiration" type="number" min="2020" max="2050" />
-                    <input id="CVC" type="number" maxLength="6" placeholder="CVC" />
+                    <input id="expirationYear" type="number" min="2020" max="2050" />
                     <button type="submit">Make Reservation</button>
                 </div>
             </form>
